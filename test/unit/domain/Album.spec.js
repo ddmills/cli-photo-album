@@ -1,6 +1,8 @@
 import { Album } from '../../../src/domain/Album';
+import { Photo } from '../../../src/domain/Photo';
 import { expect } from 'chai';
 import * as random from '../../utility/random';
+import sinon from 'sinon';
 
 describe('Album', () => {
   let album;
@@ -35,6 +37,41 @@ describe('Album', () => {
 
     it('should store the id', () => {
       expect(album).to.have.property('id', givenId);
+    });
+  });
+
+  describe('addPhoto', () => {
+    describe('adding a single photo', () => {
+      let givenPhoto;
+
+      beforeEach(() => {
+        givenPhoto = sinon.createStubInstance(Photo);
+        album = new Album();
+
+        album.addPhoto(givenPhoto);
+      });
+
+      it('should add the photo to the photos list', () => {
+        expect(album.photos).to.include(givenPhoto);
+      });
+
+      describe('adding another photo', () => {
+        let givenSecondPhoto;
+
+        beforeEach(() => {
+          givenSecondPhoto = sinon.createStubInstance(Photo);
+
+          album.addPhoto(givenSecondPhoto);
+        });
+
+        it('should have two photos', () => {
+          expect(album.photos).to.have.length(2);
+        });
+
+        it('should have both photos in the list', () => {
+          expect(album.photos).to.deep.equal([givenPhoto, givenSecondPhoto]);
+        });
+      });
     });
   });
 });

@@ -7,4 +7,8 @@ export class Album {
   setId(id) {
     this.id = id;
   }
+
+  addPhoto(photo) {
+    this.photos = [...this.photos, photo];
+  }
 }
