@@ -6,6 +6,17 @@
     "node": "10.15.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "build": "babel src -d lib",
+    "test": "npm run test:unit",
+    "test:unit": "mocha ./test/unit/*spec.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.4.4",
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
+    "@babel/register": "7.4.4",
+    "chai": "4.2.0",
+    "mocha": "6.1.4"
   }
 }
