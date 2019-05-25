@@ -54,23 +54,26 @@ describe('Album', () => {
       it('should add the photo to the photos list', () => {
         expect(album.photos).to.include(givenPhoto);
       });
+    });
 
-      describe('adding another photo', () => {
-        let givenSecondPhoto;
+    describe('adding multiple photos', () => {
+      let givenFirstPhoto, givenSecondPhoto;
 
-        beforeEach(() => {
-          givenSecondPhoto = sinon.createStubInstance(Photo);
+      beforeEach(() => {
+        album = new Album();
+        givenFirstPhoto = sinon.createStubInstance(Photo);
+        givenSecondPhoto = sinon.createStubInstance(Photo);
 
-          album.addPhoto(givenSecondPhoto);
-        });
+        album.addPhoto(givenFirstPhoto);
+        album.addPhoto(givenSecondPhoto);
+      });
 
-        it('should have two photos', () => {
-          expect(album.photos).to.have.length(2);
-        });
+      it('should have two photos', () => {
+        expect(album.photos).to.have.length(2);
+      });
 
-        it('should have both photos in the list', () => {
-          expect(album.photos).to.deep.equal([givenPhoto, givenSecondPhoto]);
-        });
+      it('should have both photos in the list', () => {
+        expect(album.photos).to.deep.equal([givenFirstPhoto, givenSecondPhoto]);
       });
     });
   });
