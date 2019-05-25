@@ -38,5 +38,8 @@
     "hooks": {
       "pre-commit": "npm run prettier:check"
     }
+  },
+  "dependencies": {
+    "axios": "0.18.0"
   }
 }
