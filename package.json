@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "babel src -d lib",
+    "build": "rimraf lib && babel src -d lib",
     "test": "npm run test:unit",
     "prettier": "prettier --write {src,test}/**/*.js",
     "prettier:check": "prettier --check {src,test}/**/*.js",
@@ -28,7 +28,8 @@
     "chai": "4.2.0",
     "husky": "2.3.0",
     "mocha": "6.1.4",
-    "prettier": "1.17.1"
+    "prettier": "1.17.1",
+    "rimraf": "2.6.3"
   },
   "husky": {
     "hooks": {
