@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import {init} from '../../src/index';
+import { expect } from 'chai';
+import { init } from '../../src/index';
 
 describe('index', () => {
   describe('init', () => {
