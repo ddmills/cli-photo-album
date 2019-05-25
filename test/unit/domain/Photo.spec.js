@@ -15,6 +15,16 @@ describe('Photo', () => {
     });
   });
 
+  describe('create', () => {
+    beforeEach(() => {
+      photo = Photo.create();
+    });
+
+    it('should be an instance of Photo', () => {
+      expect(photo).to.be.an.instanceOf(Photo);
+    });
+  });
+
   [
     {
       name: 'id',

@@ -1,4 +1,8 @@
 export class Photo {
+  static create() {
+    return new Photo();
+  }
+
   setId(id) {
     this.id = id;
   }
