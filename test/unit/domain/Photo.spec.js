@@ -1,4 +1,5 @@
 import { Photo } from '../../../src/domain/Photo';
+import { Model } from '../../../src/domain/Model';
 import { expect } from 'chai';
 import * as random from '../../utility/random';
 
@@ -10,14 +11,8 @@ describe('Photo', () => {
       photo = new Photo();
     });
 
-    it('should be an instance of Photo', () => {
-      expect(photo).to.be.an.instanceOf(Photo);
-    });
-  });
-
-  describe('create', () => {
-    beforeEach(() => {
-      photo = Photo.create();
+    it('should be an instance of Model', () => {
+      expect(photo).to.be.an.instanceOf(Model);
     });
 
     it('should be an instance of Photo', () => {

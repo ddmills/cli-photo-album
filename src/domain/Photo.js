@@ -1,4 +1,6 @@
-export class Photo {
+import { Model } from './Model';
+
+export class Photo extends Model {
   static create() {
     return new Photo();
   }

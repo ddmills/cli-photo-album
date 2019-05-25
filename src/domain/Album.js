@@ -1,5 +1,8 @@
-export class Album {
+import { Model } from './Model';
+
+export class Album extends Model {
   constructor() {
+    super();
     this.photos = [];
     this.id = null;
   }

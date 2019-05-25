@@ -1,3 +1,4 @@
+import { Model } from '../../../src/domain/Model';
 import { Album } from '../../../src/domain/Album';
 import { Photo } from '../../../src/domain/Photo';
 import { expect } from 'chai';
@@ -10,6 +11,10 @@ describe('Album', () => {
   describe('constructor', () => {
     beforeEach(() => {
       album = new Album();
+    });
+
+    it('should be an instance of Model', () => {
+      expect(album).to.be.an.instanceOf(Model);
     });
 
     it('should be an instance of Album', () => {
