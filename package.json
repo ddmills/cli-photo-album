@@ -1,10 +1,10 @@
 {
-  "name": "lt-photo-album",
+  "name": "cli-photo-album",
   "description": "over-engineered CLI photo album application",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ddmills/lt-photo-album.git"
+    "url": "https://github.com/ddmills/cli-photo-album.git"
   },
   "license": "ISC",
   "main": "index.js",

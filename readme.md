@@ -20,8 +20,8 @@ Album 12 contains 50 photos
 
 ### Usage
 1. Clone the repository
-    - `$ git clone git@github.com:ddmills/lt-photo-album.git`
-    - `$ cd lt-photo-album`
+    - `$ git clone git@github.com:ddmills/cli-photo-album.git`
+    - `$ cd cli-photo-album`
 2. Install dependencies
     - `$ npm ci`
 3. Build the code
