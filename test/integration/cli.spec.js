@@ -3,7 +3,7 @@ import * as Logger from '../../src/cli/utility/Logger';
 import * as random from '../utility/random';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import axios from 'axios';
+import nock from 'nock';
 
 const createPhotoResponse = albumId => () => ({
   albumId,
@@ -17,6 +17,10 @@ const createAlbumResponse = (albumId, photoCount) => {
   return random.arrayOf(createPhotoResponse(albumId), photoCount);
 };
 
+const stubPhotosEndpoint = (server, albumId) => {
+  return server.get('/photos').query({ albumId });
+};
+
 const listPhotos = albumId => {
   return cli.interpret({
     argv: [undefined, undefined, albumId],
@@ -24,42 +28,42 @@ const listPhotos = albumId => {
 };
 
 describe('cli', () => {
+  let server;
+
   beforeEach(() => {
-    sinon.stub(axios, 'get');
     sinon.stub(Logger, 'log');
+
+    server = nock('https://jsonplaceholder.typicode.com');
+  });
+
+  afterEach(() => {
+    nock.cleanAll();
   });
 
   describe('when a valid album id is requested', () => {
-    let givenAlbumId;
+    let albumId;
 
     beforeEach(async () => {
-      givenAlbumId = random.natural();
+      albumId = random.natural();
     });
 
     describe('when the server responds successfully', () => {
-      let serverResponse, photoCount;
+      let serverResponse, photoCount, endpoint;
 
       beforeEach(async () => {
         photoCount = random.d12();
-        serverResponse = createAlbumResponse(givenAlbumId, photoCount);
+        serverResponse = createAlbumResponse(albumId, photoCount);
 
-        axios.get.resolves({
-          data: serverResponse,
-        });
+        endpoint = stubPhotosEndpoint(server, albumId).reply(
+          200,
+          serverResponse
+        );
 
-        await listPhotos(givenAlbumId);
+        await listPhotos(albumId);
       });
 
       it('should make a request to the server', () => {
-        expect(axios.get).to.have.callCount(1);
-        expect(axios.get).to.be.calledWithExactly(
-          'https://jsonplaceholder.typicode.com/photos',
-          {
-            params: {
-              albumId: givenAlbumId,
-            },
-          }
-        );
+        expect(endpoint.isDone()).to.be.true;
       });
 
       it('should log one line for every photo, and one for the length of the album', () => {
@@ -70,7 +74,7 @@ describe('cli', () => {
         const firstLog = Logger.log.firstCall.args[0];
 
         expect(firstLog).to.equal(
-          `Album ${givenAlbumId} contains ${photoCount} photos`
+          `Album ${albumId} contains ${photoCount} photos`
         );
       });
 
@@ -87,10 +91,10 @@ describe('cli', () => {
       let error;
 
       beforeEach(async () => {
-        axios.get.rejects(new Error(random.string()));
+        stubPhotosEndpoint(server, albumId).replyWithError(random.string());
 
         try {
-          await listPhotos(givenAlbumId);
+          await listPhotos(albumId);
         } catch (e) {
           error = e;
         }
@@ -99,7 +103,7 @@ describe('cli', () => {
       it('should throw an error', () => {
         expect(error).to.be.an.instanceOf(Error);
         expect(error.message).to.equal(
-          `Album with id ${givenAlbumId} was not found`
+          `Album with id ${albumId} was not found`
         );
       });
     });
@@ -114,10 +118,6 @@ describe('cli', () => {
       } catch (e) {
         error = e;
       }
-    });
-
-    it("shouldn't make any requests to the server", () => {
-      expect(axios.get).to.have.callCount(0);
     });
 
     it('should throw an error', () => {
