@@ -62,4 +62,26 @@ describe('Photo', () => {
       });
     });
   });
+
+  describe('toString', () => {
+    let expectedId, expectedTitle, result;
+
+    beforeEach(() => {
+      expectedId = random.int();
+      expectedTitle = random.string();
+
+      photo = Photo.create();
+
+      photo.setId(expectedId);
+      photo.setTitle(expectedTitle);
+
+      result = photo.toString();
+    });
+
+    it('should output a string with the id and title', () => {
+      const parts = ['[', expectedId, ']', ' ', expectedTitle];
+
+      expect(result).to.equal(parts.join(''));
+    });
+  });
 });

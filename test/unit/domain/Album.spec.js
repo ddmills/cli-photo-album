@@ -82,4 +82,37 @@ describe('Album', () => {
       });
     });
   });
+
+  describe('toString', () => {
+    let expectedId, expectedPhotoCount, result;
+
+    beforeEach(() => {
+      album = Album.create();
+
+      expectedId = random.int();
+      expectedPhotoCount = random.d12();
+
+      const photos = random.arrayOf(
+        () => sinon.createStubInstance(Photo),
+        expectedPhotoCount
+      );
+
+      album.setId(expectedId);
+      photos.forEach(photo => album.addPhoto(photo));
+
+      result = album.toString();
+    });
+
+    it('should output a string with the id and title', () => {
+      const parts = [
+        'Album ',
+        expectedId,
+        ' contains ',
+        expectedPhotoCount,
+        ' photos',
+      ];
+
+      expect(result).to.equal(parts.join(''));
+    });
+  });
 });

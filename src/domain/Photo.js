@@ -24,4 +24,8 @@ export class Photo extends Model {
   setThumbnailUrl(thumbnailUrl) {
     this.thumbnailUrl = thumbnailUrl;
   }
+
+  toString() {
+    return `[${this.id}] ${this.title}`;
+  }
 }

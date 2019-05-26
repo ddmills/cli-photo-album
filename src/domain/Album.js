@@ -14,4 +14,8 @@ export class Album extends Model {
   addPhoto(photo) {
     this.photos = [...this.photos, photo];
   }
+
+  toString() {
+    return `Album ${this.id} contains ${this.photos.length} photos`;
+  }
 }
