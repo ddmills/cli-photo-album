@@ -1,3 +1,1 @@
-const app = require('./lib/index');
-
-console.log(app.init());
+require('./lib/cli/bootstrap').init();

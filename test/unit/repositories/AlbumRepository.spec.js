@@ -19,14 +19,16 @@ describe('AlbumRepository', () => {
     });
 
     describe('when the server returns a valid response', () => {
-      let response, expectedAlbums;
+      let responseData, expectedAlbums;
 
       beforeEach(async () => {
-        response = {
-          ...random.object(),
-          data: random.arrayOf(random.object),
-        };
+        responseData = random.arrayOf(random.object);
         expectedAlbums = random.arrayOf(random.object);
+
+        const response = {
+          ...random.object(),
+          data: responseData,
+        };
 
         axios.get.resolves(response);
         AlbumFactory.createFromJSON.returns(expectedAlbums);
@@ -50,7 +52,7 @@ describe('AlbumRepository', () => {
         expect(AlbumFactory.createFromJSON).to.have.callCount(1);
         expect(AlbumFactory.createFromJSON).to.be.calledWithExactly(
           givenAlbumId,
-          response
+          responseData
         );
       });
 
@@ -72,7 +74,7 @@ describe('AlbumRepository', () => {
         }
       });
 
-      it('should throw an album not-found error', () => {
+      it('should throw an "album not found" error', () => {
         expect(error).to.be.an.instanceOf(Error);
         expect(error.message).to.equal(
           `Album with id ${givenAlbumId} was not found`
