@@ -14,10 +14,11 @@
   "scripts": {
     "start": "node index.js",
     "build": "rimraf lib && babel src -d lib",
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:integration",
     "prettier": "prettier --write {src,test}/**/*.js",
     "prettier:check": "prettier --check {src,test}/**/*.js",
     "test:unit": "mocha ./test/unit/**/*spec.js",
+    "test:integration": "mocha ./test/integration/**/*spec.js",
     "verify": "npm run build && npm run prettier:check && npm test"
   },
   "devDependencies": {

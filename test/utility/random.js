@@ -6,6 +6,7 @@ export const string = chance.string.bind(chance);
 export const int = chance.integer.bind(chance);
 export const url = chance.url.bind(chance);
 export const d12 = chance.d12.bind(chance);
+export const natural = () => chance.natural() + 1;
 
 export const object = () => ({
   [string()]: string(),
