@@ -62,3 +62,26 @@ Verify code is up to "prettier" standards
 **npm run verify**
 
 Ensures the code can be built, runs all tests, and checks that the code matches "prettier" standards
+
+**npm run start:simple {albumId}**
+
+Run the simpler version of the app (see below)
+
+### Extra
+The following is a less engineered version of the program that produces the same outputs, and likely a lot easier to digest:
+
+```js
+const axios = require('axios');
+const albumId = process.argv[2];
+
+if (!albumId) throw new Error('Please input an album id');
+
+const endpoint = `https://jsonplaceholder.typicode.com/photos?albumId=${albumId}`;
+
+axios.get(endpoint).then(({ data }) => {
+  console.log(`Album ${albumId} contains ${data.length} photos`);
+  data.forEach(photo => {
+    console.log(`[${photo.id}] ${photo.title}`);
+  });
+});
+```
